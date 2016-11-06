@@ -102,7 +102,7 @@ fig1, axes1 = plt.subplots(3, 3, figsize=(8, 8))
 fpcs = []
 
 for ncenters, ax in enumerate(axes1.reshape(-1), 2):
-    cntr, u, u0, d, jm, p, fpc = fuzz.cluster.cmeans(dataset, ncenters, 2, error=0.005, maxiter=1000, init=None)
+    cntr, u, u0, d, jm, p, fpc = fuzz.cluster.cmeans(alldata, ncenters, 2, error=0.005, maxiter=1000, init=None)
 
 # Store fpc values for later
 fpcs.append(fpc)
