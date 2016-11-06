@@ -1,15 +1,18 @@
-!/usr/bin/python
-# Reference Code for normal K-Mean Algo: http://qatar.cmu.edu/~dfossati/15-110-fall12/resources/20121125.kmeans.py
+#!/usr/bin/python
+
 import os
 import numpy as np
 from collections import defaultdict
-import csv
 import math
 import random
 import time
 import heapq
 import copy
+import csv
 
+######################################################################
+# Reference Code for normal K-Mean Algo: 
+#http://qatar.cmu.edu/~dfossati/15-110-fall12/resources/20121125.kmeans.py
 ######################################################################
 # Input the data resource and convert it into dataset of instances
 ######################################################################
@@ -22,6 +25,7 @@ def loadCSVResource(fileName):
     for line in lines:
         instance = lineToTuple(line)
         dataset.append(instance)
+    #print dataset
     return dataset
 
 # To split a CSV file you can also use Excel tools
