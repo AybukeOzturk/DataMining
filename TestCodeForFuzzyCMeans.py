@@ -9,10 +9,20 @@ import time
 import heapq
 import copy
 import csv
+import skfuzzy as fuzz
+import matplotlib
+matplotlib.use('Agg')
+import matplotlib.pyplot as plt
+
 
 ######################################################################
-# Reference Code for normal K-Mean Algo: 
-#http://qatar.cmu.edu/~dfossati/15-110-fall12/resources/20121125.kmeans.py
+# References
+# Implementation Code for normal K-Mean Algo: 
+# http://qatar.cmu.edu/~dfossati/15-110-fall12/resources/20121125.kmeans.py
+######################################################################
+
+
+
 ######################################################################
 # Input the data resource and convert it into dataset of instances
 ######################################################################
@@ -59,7 +69,42 @@ print "dataset: " + str(dataset)
 
 
 ######################################################################
-# Use the data resource for fuzzy clustering
+# Fuzzy skfuzzy.cmeans
+# https://github.com/scikit-fuzzy/scikit-fuzzy/blob/master/docs/examples/plot_cmeans.py
 ######################################################################
 
+# Test data generation
+# Define three cluster centers
+centers = [[4, 2],
+           [1, 7],
+           [5, 6]]
+           
+# Define three cluster sigmas in x and y, respectively
+sigmas = [[0.8, 0.3],
+          [0.3, 0.5],
+          [1.1, 0.7]]
+           
+# Generate test data
+np.random.seed(42)  # Set seed for reproducibility
+xpts = np.zeros(1)
+ypts = np.zeros(1)
+labels = np.zeros(1)
+for i, ((xmu, ymu), (xsigma, ysigma)) in enumerate(zip(centers, sigmas)):
+    xpts = np.hstack((xpts, np.random.standard_normal(200) * xsigma + xmu))
+    ypts = np.hstack((ypts, np.random.standard_normal(200) * ysigma + ymu))
+    labels = np.hstack((labels, np.ones(200) * i))
 
+alldata = np.vstack((xpts, ypts))
+print "alldata: " + str(alldata)
+
+fig1, axes1 = plt.subplots(3, 3, figsize=(8, 8))
+    
+fpcs = []
+
+for ncenters, ax in enumerate(axes1.reshape(-1), 2):
+    cntr, u, u0, d, jm, p, fpc = fuzz.cluster.cmeans(dataset, ncenters, 2, error=0.005, maxiter=1000, init=None)
+
+# Store fpc values for later
+fpcs.append(fpc)
+    
+print "fpcs: " + str(alldata)
